@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="430473f7-2ceb-451c-9539-bb824eaac773" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,12 +185,23 @@
       <workItem from="1603126395778" duration="3702000" />
       <workItem from="1603960411401" duration="1106000" />
       <workItem from="1604042495031" duration="272000" />
-      <workItem from="1605629975316" duration="1036000" />
+      <workItem from="1605629975316" duration="5001000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="473" y="234" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1605631743207">
@@ -202,6 +212,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="230" y="65" key="SettingsEditor/0.23.1440.877/-1920.-157.1920.1057@0.23.1440.877" timestamp="1602871185278" />
+    <state x="100" y="123" width="1240" height="603" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1605634383882">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="100" y="123" width="1240" height="603" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1440.900/-1920.-180.1920.1080@0.0.1440.900" timestamp="1605634383882" />
     <state x="400" y="212" width="639" height="476" key="find.popup" timestamp="1603128030963">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
