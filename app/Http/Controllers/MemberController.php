@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
+use App\Models\User as User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth as JWTAuth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User as User;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use App\Http\Requests\RegisterRequest;
+use Tymon\JWTAuth\Facades\JWTAuth as JWTAuth;
 
 class MemberController extends Controller
 {
     protected $data = [];
+
     /**
      *
      * @return void
@@ -30,6 +32,7 @@ class MemberController extends Controller
             ]
         ];
     }
+
     public function login(Request $request): JsonResponse
     {
         $credentials = $request->only(['email', 'password']);
@@ -54,6 +57,7 @@ class MemberController extends Controller
         }
         return response()->json($this->data, $this->data['code']);
     }
+
     /**
      * Kullanıcı kayıt eden method burada kullanılan RegisterRequest  daha önce
      * anlatıldığı için detaylandırmıyorum.
@@ -63,23 +67,45 @@ class MemberController extends Controller
 
     public function register(RegisterRequest $request): JsonResponse
     {
-        $user = User::create([
-            'name' => $request->post('name'),
-            'email' => $request->post('email'),
-            'password' => Hash::make($request->post('password')),
-            'username' =>  $request->post('username'),
-            'phone' =>  $request->post('phone'),
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|unique:users|email',
+            'password' => 'required|min:6',
+            'username' => 'required|unique:users',
+            'name' => 'required',
+            'phone' => 'required|unique:users',
         ]);
-        $this->data = [
-            'status' => true,
-            'code' => 200,
-            'data' => [
-                'User' => $user
-            ],
-            'err' => null
-        ];
-        return response()->json($this->data, $this->data['code']);
+        try {
+            if ($validator->fails()){
+                throw new Exception('1');
+            }
+            $user = User::create([
+                'name' => $request->post('name'),
+                'email' => $request->post('email'),
+                'password' => Hash::make($request->post('password')),
+                'username' => $request->post('username'),
+                'phone' => $request->post('phone'),
+            ]);
+            $this->data = [
+                'status' => true,
+                'code' => 200,
+                'data' => [
+                    'User' => $user
+                ],
+                'err' => null
+            ];
+            return response()->json($this->data, $this->data['code']);
+        } catch (Exception $e) {
+
+            $this->data['err']['message'] = $e->getMessage();
+            if ($e->getMessage()=="1"){
+                $this->data['err']['message'] = $validator->errors()->first();
+            }
+            $this->data['code'] = 401;
+            return response()->json($this->data, $this->data['code']);
+        }
+
     }
+
     /**
      * Doğrulanmış olan kullanıcının detay bilgilerini getir.
      *
@@ -97,6 +123,7 @@ class MemberController extends Controller
         ];
         return response()->json($this->data);
     }
+
     /**
      * Kullanıcının çıkış işlemini yap ve token'ı kullanılamaz duruma getir.
      * @return JsonResponse
@@ -114,6 +141,7 @@ class MemberController extends Controller
         ];
         return response()->json($data);
     }
+
     /**
      * Son kullanma tarihi geçmiş olan JWT nin tekrar kullanılır hale gelmesi
      * için yenileme işlemi.
