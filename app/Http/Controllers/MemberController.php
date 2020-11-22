@@ -36,9 +36,16 @@ class MemberController extends Controller
     public function login(Request $request): JsonResponse
     {
         $credentials = $request->only(['email', 'password']);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]);
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
                 throw new Exception('invalid_credentials');
+            }
+            if ($validator->fails()){
+                throw new Exception('1');
             }
             $this->data = [
                 'status' => true,
@@ -50,6 +57,9 @@ class MemberController extends Controller
             ];
         } catch (Exception $e) {
             $this->data['err']['message'] = $e->getMessage();
+            if ($e->getMessage()=="1"){
+                $this->data['err']['message'] = $validator->errors()->first();
+            }
             $this->data['code'] = 401;
         } catch (JWTException $e) {
             $this->data['err']['message'] = 'Could not create token';

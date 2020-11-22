@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="430473f7-2ceb-451c-9539-bb824eaac773" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/lang/tr/auth.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/tr/pagination.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/tr/passwords.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/tr/validation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MemberController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MemberController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/JwtMiddleware.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/JwtMiddleware.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,9 +154,14 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/lang" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -187,7 +199,8 @@
       <workItem from="1604042495031" duration="272000" />
       <workItem from="1605629975316" duration="6192000" />
       <workItem from="1605681044140" duration="69000" />
-      <workItem from="1605722608721" duration="3609000" />
+      <workItem from="1605722608721" duration="4345000" />
+      <workItem from="1606038816483" duration="1867000" />
     </task>
     <servers />
   </component>
@@ -220,14 +233,16 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="100" y="123" width="1240" height="603" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1440.900/-1920.-180.1920.1080@0.0.1440.900" timestamp="1605634383882" />
-    <state x="400" y="212" width="639" height="476" key="find.popup" timestamp="1603128030963">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="400" y="212" width="639" height="476" key="find.popup" timestamp="1606039524546">
+      <screen x="0" y="23" width="1440" height="803" />
     </state>
     <state x="400" y="212" width="639" height="476" key="find.popup/0.0.1440.900/-1920.-180.1920.1080@0.0.1440.900" timestamp="1603128030963" />
-    <state x="385" y="177" width="670" height="694" key="search.everywhere.popup" timestamp="1603127425784">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="400" y="212" width="639" height="476" key="find.popup/0.23.1440.803/-1920.-157.1920.1057@0.23.1440.803" timestamp="1606039524546" />
+    <state x="385" y="181" width="670" height="620" key="search.everywhere.popup" timestamp="1606039511140">
+      <screen x="0" y="23" width="1440" height="803" />
     </state>
     <state x="385" y="177" width="670" height="694" key="search.everywhere.popup/0.0.1440.900/-1920.-180.1920.1080@0.0.1440.900" timestamp="1603127425784" />
+    <state x="385" y="181" width="670" height="620" key="search.everywhere.popup/0.23.1440.803/-1920.-157.1920.1057@0.23.1440.803" timestamp="1606039511140" />
     <state x="385" y="181" width="670" height="622" key="search.everywhere.popup/0.23.1440.806/-1920.-157.1920.1057@0.23.1440.806" timestamp="1602869083332" />
     <state x="385" y="195" width="670" height="676" key="search.everywhere.popup/0.23.1440.877/-1920.-157.1920.1057@0.23.1440.877" timestamp="1602870235218" />
   </component>

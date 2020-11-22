@@ -23,7 +23,7 @@ class JwtMiddleware extends BaseMiddleware
         try {
             $user = JWTAuth::parseToken()->authenticate();
             if (!$user) {
-                throw new Exception('User Not Found');
+                throw new Exception('Kullanıcı Bulunamadı.');
             }
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
@@ -31,7 +31,7 @@ class JwtMiddleware extends BaseMiddleware
                         'data' => null,
                         'status' => false,
                         'err_' => [
-                            'message' => 'Token Invalid',
+                            'message' => 'Token Geçersiz',
                             'code' => 1
                         ]
                     ]
@@ -42,18 +42,18 @@ class JwtMiddleware extends BaseMiddleware
                             'data' => null,
                             'status' => false,
                             'err_' => [
-                                'message' => 'Token Expired',
+                                'message' => 'Token süresi doldu',
                                 'code' => 1
                             ]
                         ]
                     );
                 } else {
-                    if ($e->getMessage() === 'User Not Found') {
+                    if ($e->getMessage() === 'Kullanıcı Bulunamadı.') {
                         return response()->json([
                                 "data" => null,
                                 "status" => false,
                                 "err_" => [
-                                    "message" => "User Not Found",
+                                    "message" => $e->getMessage(),
                                     "code" => 1
                                 ]
                             ]
@@ -63,7 +63,7 @@ class JwtMiddleware extends BaseMiddleware
                             'data' => null,
                             'status' => false,
                             'err_' => [
-                                'message' => 'Authorization Token not found',
+                                'message' => 'Token geçerli değil',
                                 'code' => 1
                             ]
                         ]
