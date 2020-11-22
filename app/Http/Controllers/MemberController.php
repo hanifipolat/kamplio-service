@@ -36,16 +36,25 @@ class MemberController extends Controller
     public function login(Request $request): JsonResponse
     {
         $credentials = $request->only(['email', 'password']);
+
+
+        $niceNames = array(
+            'email' => 'E-Posta',
+            'password' => 'Şifre',
+        );
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|min:6'
         ]);
+        $validator->setAttributeNames($niceNames);
+
         try {
-            if (!$token = JWTAuth::attempt($credentials)) {
-                throw new Exception('invalid_credentials');
-            }
+
             if ($validator->fails()){
                 throw new Exception('1');
+            }
+            if (!$token = JWTAuth::attempt($credentials)) {
+                throw new Exception('invalid_credentials');
             }
             $this->data = [
                 'status' => true,
@@ -84,6 +93,15 @@ class MemberController extends Controller
             'name' => 'required',
             'phone' => 'required|unique:users',
         ]);
+        $niceNames = array(
+            'email' => 'E-Posta',
+            'password' => 'Şifre',
+            'username' => 'Kullanıcı Adı',
+            'name' => 'İsim ve Soyisim',
+            'phone' => 'Telefon Numarası',
+        );
+        $validator->setAttributeNames($niceNames);
+
         try {
             if ($validator->fails()){
                 throw new Exception('1');
