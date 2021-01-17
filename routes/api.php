@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MemberController as MemberController;
+use App\Http\Controllers\UserController as UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +20,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::group([
     'middleware' => ['api'],
-    'prefix' => 'member'
+    'prefix' => 'auth'
 ], static function ($router) {
-    Route::post('login', [MemberController::class,'login']);
-    Route::post('register', [MemberController::class,'register']);
+    Route::post('login', [UserController::class,'login']);
+    Route::post('register', [UserController::class,'register']);
     Route::group(['middleware' => 'jwt.verify'], static function( $router){
-        Route::post('logout', [MemberController::class,'logout']);
-        Route::post('refresh', [MemberController::class,'refresh']);
-        Route::get('detail', [MemberController::class,'detail']);
+        Route::post('logout', [UserController::class,'logout']);
+        Route::post('refresh', [UserController::class,'refresh']);
+        Route::get('email-verify', [UserController::class,'emailVerify']);
+        Route::get('detail', [UserController::class,'detail']);
+        Route::get('create-verify-code', [UserController::class,'createVerifyCode']);
+        Route::post('reset-password', [UserController::class,'resetPassword']);
+        Route::post('change-password', [UserController::class,'changePassword']);
     });
 });
