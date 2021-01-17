@@ -58,7 +58,7 @@ class UserController extends Controller
                 throw new Exception('1');
             }
             if (!$token = JWTAuth::attempt($credentials)) {
-                throw new Exception('invalid_credentials');
+                throw new Exception('Kullanıcı adı veya şifre hatalı.');
             }
             $payload = [
                 'status' => true,
