@@ -19,12 +19,16 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('email')->unique();
             $table->unsignedBigInteger('phone')->nullable();
+            $table->enum('gender',['M','F'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar_url')->nullable();
-            $table->boolean('emails_enabled')->default(true);
             $table->boolean('notifications_enabled')->default(true);
+            $table->string('verify_code')->nullable();
+            $table->tinyInteger('is_banned')->default(0);
+            $table->integer('is_reported')->default(0);
+            $table->boolean('is_active')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });
