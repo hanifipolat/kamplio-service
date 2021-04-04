@@ -151,6 +151,15 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'password'=>"Şifre",
+        'verifyCode'=>"Doğrulama kodu",
+        'email'=>"E-Posta",
+        'username'=>"Kullanıcı Adı",
+        'name'=>"İsim ve Soyisim",
+        'phone'=>"Telefon Numarası",
+
+
+    ],
 
 ];

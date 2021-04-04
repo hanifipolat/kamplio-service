@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\Models\Interest;
+use App\Models\Interestable;
 use App\Models\User as User;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -39,19 +41,12 @@ class UserController extends Controller
      */
     public function login(Request $request): JsonResponse
     {
-        $payload = $this->payload;
         $credentials = $request->only(['email', 'password']);
 
-        $niceNames = array(
-            'email' => 'E-Posta',
-            'password' => 'Şifre',
-        );
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|min:6'
         ]);
-        $validator->setAttributeNames($niceNames);
-
         try {
 
             if ($validator->fails()){
@@ -100,7 +95,6 @@ class UserController extends Controller
      */
     public function register(RegisterRequest $request): JsonResponse
     {
-        $payload = $this->payload;
         $validator = Validator::make($request->all(), [
             'email' => 'required|unique:users|email',
             'password' => 'required|min:6',
@@ -108,14 +102,6 @@ class UserController extends Controller
             'name' => 'required',
             'phone' => 'required|unique:users',
         ]);
-        $niceNames = array(
-            'email' => 'E-Posta',
-            'password' => 'Şifre',
-            'username' => 'Kullanıcı Adı',
-            'name' => 'İsim ve Soyisim',
-            'phone' => 'Telefon Numarası',
-        );
-        $validator->setAttributeNames($niceNames);
 
         try {
             if ($validator->fails()){
@@ -169,15 +155,10 @@ class UserController extends Controller
      */
     public function emailVerify(Request $request)
     {
-        $payload = $this->payload;
-        $niceNames = array(
-            'verifyCode' => 'Doğrulama Kodu',
-        );
+
         $validator = Validator::make($request->all(), [
             'verifyCode' => 'required',
         ]);
-        $validator->setAttributeNames($niceNames);
-
         try {
             if ($validator->fails()) {
                 throw new Exception('1');
@@ -213,15 +194,10 @@ class UserController extends Controller
     public function resetPassword(Request $request)
     {
         $payload = $this->payload;
-        $niceNames = array(
-            'verifyCode' => 'Doğrulama Kodu',
-            'password' => 'Şifre'
-        );
         $validator = Validator::make($request->all(), [
             'verifyCode' => 'required',
             'password' => 'required|min:6'
         ]);
-        $validator->setAttributeNames($niceNames);
 
         try {
             if ($validator->fails()) {
@@ -257,15 +233,9 @@ class UserController extends Controller
 
     public function changePassword(Request $request)
     {
-        $payload = $this->payload;
-        $niceNames = array(
-            'password' => 'Şifre'
-        );
         $validator = Validator::make($request->all(), [
             'password' => 'required|min:6'
         ]);
-        $validator->setAttributeNames($niceNames);
-
         try {
             if ($validator->fails()) {
                 throw new Exception('1');
@@ -346,4 +316,33 @@ class UserController extends Controller
         return response()->json($data, $this->payload['code']);
     }
 
+    public function saveUserInterests(Request $request)
+    {
+        $user = auth()->user();
+        $validator = Validator::make($request->all(), [
+            'interestId' => 'required|int'
+        ]);
+        try {
+            if ($validator->fails()) {
+                throw new Exception('1');
+            }
+            $statusCode = 200;
+            $interestArray=$request->interestId;
+            foreach ($interestArray as $value)
+            {
+                $interest=Interest::find($value);
+                $user->interests()->attach($interest->id);
+            }
+            $payload['status']=true;
+            $payload['userInterests']=$user->interests;
+            $payload['err']['message']=null;
+        } catch (Exception $e) {
+            $payload['err']['message'] = $e->getMessage();
+            if ($e->getMessage() == "1") {
+                $payload['err']['message'] = $validator->errors()->first();
+            }
+            $statusCode = 500;
+        }
+        return response()->json($payload, $statusCode);
+    }
 }

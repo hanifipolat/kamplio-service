@@ -25,6 +25,7 @@ Route::group([
     Route::post('login', [UserController::class,'login']);
     Route::post('register', [UserController::class,'register']);
     Route::group(['middleware' => 'jwt.verify'], static function( $router){
+
         Route::post('logout', [UserController::class,'logout']);
         Route::post('refresh', [UserController::class,'refresh']);
         Route::get('email-verify', [UserController::class,'emailVerify']);
@@ -32,5 +33,6 @@ Route::group([
         Route::get('create-verify-code', [UserController::class,'createVerifyCode']);
         Route::post('reset-password', [UserController::class,'resetPassword']);
         Route::post('change-password', [UserController::class,'changePassword']);
+        Route::post('save-user-interests', [UserController::class,'saveUserInterests']);
     });
 });

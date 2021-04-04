@@ -32,6 +32,11 @@ class User extends Authenticatable implements JWTSubject
         "username"
     ];
 
+    public function interests()
+    {
+        return $this->morphToMany(Interest::class, 'interestable');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -50,4 +55,8 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function interestable()
+    {
+        return $this->morphToMany(Interestable::class, 'interestable');
+    }
 }
