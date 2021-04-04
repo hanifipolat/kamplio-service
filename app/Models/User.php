@@ -24,18 +24,14 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        "phone",
-        "username"
-    ];
+    protected $guarded = [];
+
 
     public function interests()
     {
         return $this->morphToMany(Interest::class, 'interestable');
     }
+
 
     /**
      * The attributes that should be hidden for arrays.

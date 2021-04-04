@@ -16,9 +16,5 @@ class Post extends Model
     {
         return $this->morphToMany(Interest::class, 'interestable');
     }
-    public function tags()
-    {
-        return $this->morphToMany(Tag::class, 'interestable');
-    }
 
 }

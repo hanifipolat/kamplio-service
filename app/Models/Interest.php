@@ -10,6 +10,7 @@ class Interest extends Model
     use HasFactory;
    # protected $visible=['id','name'];
     protected $guarded = [];
+    //Interest::with(['posts','users])->find($interest->id)
 
     public function posts()
     {

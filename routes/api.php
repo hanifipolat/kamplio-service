@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController as UserController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,12 @@ Route::group([
         Route::post('save-user-interests', [UserController::class,'saveUserInterests']);
     });
 });
+Route::group([
+    'middleware' => ['api']
+], static function ($router) {
+    Route::group(['middleware' => 'jwt.verify'], static function( $router){
+        Route::get('getInterestingPosts', [PostController::class,'showPostList']);
+
+    });
+});
+

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
-use App\Models\Interest;
-use App\Models\Interestable;
 use App\Models\User as User;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -73,7 +71,7 @@ class UserController extends Controller
         } catch (Exception $e) {
             $payload['err']['message'] = $e->getMessage();
             if ($e->getMessage()=="1"){
-                $payload['err']['message'] = $validator->errors();
+                $payload['err']['message'] = $validator->errors()->first()->first();
             }
             $statusCode = 401;
         } catch (JWTException $e) {
@@ -126,7 +124,7 @@ class UserController extends Controller
 
             $payload['err']['message'] = $e->getMessage();
             if ($e->getMessage() == "1") {
-                $payload['err']['message'] = $validator->errors();
+                $payload['err']['message'] = $validator->errors()->first()->first();
             }
             $statusCode = 401;
 
@@ -181,7 +179,7 @@ class UserController extends Controller
         } catch (Exception $e) {
             $payload['err']['message'] = $e->getMessage();
             if ($e->getMessage() == "1") {
-                $payload['err']['message'] = $validator->errors();
+                $payload['err']['message'] = $validator->errors()->first();
             }
             $statusCode = 401;
         } catch (JWTException $e) {
@@ -221,7 +219,7 @@ class UserController extends Controller
         } catch (Exception $e) {
             $payload['err']['message'] = $e->getMessage();
             if ($e->getMessage() == "1") {
-                $payload['err']['message'] = $validator->errors();
+                $payload['err']['message'] = $validator->errors()->first();
             }
             $statusCode = 401;
         } catch (JWTException $e) {
@@ -251,7 +249,7 @@ class UserController extends Controller
         } catch (Exception $e) {
             $payload['err']['message'] = $e->getMessage();
             if ($e->getMessage() == "1") {
-                $payload['err']['message'] = $validator->errors();
+                $payload['err']['message'] = $validator->errors()->first();
             }
             $statusCode = 401;
         } catch (JWTException $e) {
@@ -316,33 +314,31 @@ class UserController extends Controller
         return response()->json($data, $this->payload['code']);
     }
 
+
     public function saveUserInterests(Request $request)
     {
         $user = auth()->user();
         $validator = Validator::make($request->all(), [
-            'interestId' => 'required|int'
+            'interestId' => 'required|array'
         ]);
         try {
             if ($validator->fails()) {
                 throw new Exception('1');
             }
             $statusCode = 200;
-            $interestArray=$request->interestId;
-            foreach ($interestArray as $value)
-            {
-                $interest=Interest::find($value);
-                $user->interests()->attach($interest->id);
-            }
-            $payload['status']=true;
+            $interestArray = $request->interestId;
+            $user->interests()->sync($interestArray);
+            $payload['status'] = true;
             $payload['userInterests']=$user->interests;
             $payload['err']['message']=null;
         } catch (Exception $e) {
             $payload['err']['message'] = $e->getMessage();
             if ($e->getMessage() == "1") {
-                $payload['err']['message'] = $validator->errors()->first();
+                $payload['err']['message'] = $validator->errors()->first()->first();
             }
             $statusCode = 500;
         }
         return response()->json($payload, $statusCode);
     }
+
 }
